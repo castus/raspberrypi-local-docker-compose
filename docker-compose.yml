@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  mqttbroker:
+    container_name: mqttbroker
+    ports:
+      - "1883:1883"
+    image: "c4stus/raspberrypi:mqttbroker"
+    networks:
+      - mqtt-network
+    volumes:
+      - ./mosquitto-logs:/etc/mosquitto/log/
+    tty: true
+  
+  triggersapi:
+    container_name: triggersapi
+    ports:
+      - "8080:8080"
+    image: "c4stus/raspberrypi:triggersapi"
+    networks:
+      - mqtt-network
+    tty: true
+    env_file:
+      - ../rapsberrypi-local-triggersApi/.env.secrets
+  
+  lightcontroller:
+    depends_on:
+      - mqttbroker
+      - triggersapi
+    container_name: lightcontroller
+    image: "c4stus/raspberrypi:lightcontroller"
+    networks:
+      - mqtt-network
+    tty: true
+    env_file:
+      - ../rapsberrypi-local-lightController/.env
+      - ../rapsberrypi-local-lightController/.env.secrets
+  
+  crontrigger:
+    depends_on:
+      - mqttbroker
+      - triggersapi
+    container_name: crontrigger
+    image: "c4stus/raspberrypi:crontrigger"
+    networks:
+      - mqtt-network
+    tty: true
+    env_file:
+      - ../raspberrypi-local-cronTrigger/.env
+      - ../raspberrypi-local-cronTrigger/.env.secrets
+
+networks:
+  mqtt-network: {}

@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  lightcontroller:
+    env_file:
+      - ../rapsberrypi-local-lightController/.env.prod
+  crontrigger:
+    env_file:
+      - ../raspberrypi-local-cronTrigger/.env.prod
