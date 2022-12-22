@@ -7,10 +7,8 @@ services:
     image: "c4stus/raspberrypi:mqttbroker"
     networks:
       - mqtt-network
-    volumes:
-      - ./mosquitto-logs:/etc/mosquitto/log/
     tty: true
-  
+
   triggersapi:
     container_name: triggersapi
     ports:
@@ -20,8 +18,8 @@ services:
       - mqtt-network
     tty: true
     env_file:
-      - ../rapsberrypi-local-triggersApi/.env.secrets
-  
+      - ./.env.secrets
+
   lightcontroller:
     depends_on:
       - mqttbroker
@@ -32,9 +30,9 @@ services:
       - mqtt-network
     tty: true
     env_file:
-      - ../rapsberrypi-local-lightController/.env
-      - ../rapsberrypi-local-lightController/.env.secrets
-  
+      - ./.env
+      - ./.env.secrets
+
   crontrigger:
     depends_on:
       - mqttbroker
@@ -45,8 +43,7 @@ services:
       - mqtt-network
     tty: true
     env_file:
-      - ../raspberrypi-local-cronTrigger/.env
-      - ../raspberrypi-local-cronTrigger/.env.secrets
+      - ./.env
 
 networks:
   mqtt-network: {}
