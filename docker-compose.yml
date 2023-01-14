@@ -44,17 +44,20 @@ services:
     tty: true
     env_file:
       - ./.env
+
   blecron:
     depends_on:
       - mqttbroker
     container_name: blecron
     image: "c4stus/raspberrypi:blecron"
+    privileged: true
     networks:
       - mqtt-network
+    volumes:
+      - /var/run/dbus/:/var/run/dbus/:z
     tty: true
     env_file:
       - ./.env
-    command: ["./wait-to-kill-bluetooth.sh"]
 
 networks:
   mqtt-network: {}

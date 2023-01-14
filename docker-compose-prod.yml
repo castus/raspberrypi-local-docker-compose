@@ -6,3 +6,6 @@ services:
   crontrigger:
     env_file:
       - ./.env.prod
+  blecron:
+    env_file:
+      - ./.env.prod
