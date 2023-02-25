@@ -13,3 +13,8 @@ services:
 
   triggersapi:
     platform: "linux/arm64"
+
+  blecron:
+    platform: "linux/arm64"
+    env_file:
+      - ./.env.dev
