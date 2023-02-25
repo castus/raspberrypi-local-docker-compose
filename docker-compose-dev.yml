@@ -1,8 +1,15 @@
 version: "3.9"
 services:
+  mqttbroker:
+    platform: "linux/arm64"
   lightcontroller:
+    platform: "linux/arm64"
     env_file:
       - ./.env.dev
   crontrigger:
+    platform: "linux/arm64"
     env_file:
       - ./.env.dev
+
+  triggersapi:
+    platform: "linux/arm64"
